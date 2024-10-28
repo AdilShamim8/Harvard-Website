@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Web Site Design</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+    <section class="sub-header">
+        <nav>
+            <a href="index.html"> <img src="images/Harvard logo.png" alt="Logo"> </a>
+            <div class="nav-links" id="navLinks">
+                <i class="fa fa-times" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="index.html" target="_blank">Go Home</a></li>
+                    <li><a href="About.html" target="_blank">About Us</a></li>
+                    <li><a href="Course.html" target="_blank">Course</a></li>
+                    <li><a href="Blog.html" target="_blank">Blog</a></li>
+                    <li><a href="Contact.html" target="_blank">Contact Us</a></li>
+                </ul>
+            </div>
+            <i class="fa fa-bars" onclick="showMenu()"></i>
+        </nav>
+        <h1> Our Courses </h1>
+    </section>
+
+    <!---------------------- Course  ------------------------>
+
+    <section class="course">
+        <h1>Discover Our Enhanced Course Offerings</h1>
+        <p>At Harvard University, our Computer Science and Engineering (CSE) program offers a comprehensive range of courses designed to equip students with the skills and knowledge needed to excel in the tech industry. Our curriculum includes foundational courses such as <strong>Introduction to Programming</strong>, where students learn the basics of coding and algorithm design, and <strong>Data Structures and Algorithms</strong>, which delves into efficient data management and problem-solving techniques. Advanced courses like <strong>Machine Learning</strong> cover topics such as neural networks and deep learning, while <strong>Data Science</strong> focuses on data analysis, visualization, and statistical methods. We also offer specialized courses in <strong>Web Development</strong>, teaching students to build dynamic and responsive websites using modern frameworks like React and Node.js. Each course is designed to provide a balance of theoretical understanding and practical application, ensuring that our graduates are well-prepared for the challenges of the modern tech landscape. Our experienced faculty and state-of-the-art facilities create an ideal environment for learning and innovation, making Harvard University a top choice for aspiring computer scientists and engineers.</p>
+        
+        <div class="row">
+            <div class="course-col">
+                <h3>1. Introduction to Programming</h3>
+                <p>Description: This foundational course introduces students to the basics of programming. Students learn to write simple programs, understand algorithms, and solve problems using code.<br>
+                    Key Topics: Variables, control structures, functions, and basic data structures.<br>
+                    Benefits: Provides a strong foundation for further studies in computer science and software development.</p>
+            </div>
+            <div class="course-col">
+                <h3>2. Data Structures and Algorithms</h3>
+                <p>Description: This course delves into efficient data management and problem-solving techniques. Students learn about various data structures and algorithms, their implementation, and their applications.<br>
+                    Key Topics: Arrays, linked lists, stacks, queues, trees, graphs, sorting, and searching algorithms.<br>
+                    Benefits: Equips students with essential skills for optimizing and solving complex computational problems.</p>
+            </div>
+            <div class="course-col">
+                <h3>3. Machine Learning</h3>
+                <p>Description: An advanced course that covers machine learning techniques and their applications. Students explore various algorithms and models used in machine learning.<br>
+                    Key Topics: Supervised and unsupervised learning, neural networks, deep learning, and natural language processing.<br>
+                    Benefits: Prepares students for careers in AI and data science with hands-on projects and real-world applications.</p>
+            </div>
+            <div class="course-col">
+                <h3>4. Data Science</h3>
+                <p>Description: This course focuses on data analysis, visualization, and statistical methods. Students learn to extract insights from data and make data-driven decisions.<br>
+                    Key Topics: Data cleaning, exploratory data analysis, statistical inference, and machine learning.<br>
+                    Benefits: Provides the skills needed to analyze and interpret data, making students valuable in various industries.</p>
+            </div>
+            <div class="course-col">
+                <h3>5. Web Development</h3>
+                <p>Description: A comprehensive course on building dynamic and responsive websites. Students learn to use modern web development frameworks and tools.<br>
+                    Key Topics: HTML, CSS, JavaScript, React, Node.js, and responsive design.<br>
+                    Benefits: Enables students to develop a portfolio of web projects and gain the skills needed for a career in web development.</p>
+            </div>
+        </div>
+    </section> 
+
+    <!---------- Facilities ------------->
+
+    <section class="facilities">
+        <h2>Harvard University Facilities</h2>
+        <p>Harvard University offers a wide range of facilities to support its students, faculty, and staff. Here are some highlights:</p>
+        
+        <div class="row1">
+            <div class="facilities-col">
+                <img src="images/library.png" alt="Harvard Library System">
+                <h3>Harvard Library System</h3>
+                <p>One of the largest academic library systems in the world, offering extensive resources for research and study. It provides access to millions of books, journals, and digital resources, supporting both academic and personal growth.</p>
+            </div>
+            <div class="facilities-col">
+                <img src="images/cafeteria.png" alt="Harvard University Cafeteria Facilities">
+                <h3>Harvard University Cafeteria Facilities</h3>
+                <p>Harvard University’s dining facilities are designed to provide a welcoming and nourishing environment for all students. From the historic Annenberg Dining Hall to the convenient campus cafes, there are plenty of options to suit every taste and dietary need.</p>
+            </div>
+            <div class="facilities-col">
+                <img src="images/basketball.png" alt="Harvard University Basketball Facilities">
+                <h3>Harvard University Basketball Facilities</h3>
+                <p>Harvard University provides excellent facilities for basketball enthusiasts, from the historic Lavietes Pavilion to the versatile Malkin Athletic Center. These venues offer state-of-the-art amenities and a supportive environment for both competitive athletes and recreational players.</p>
+            </div>
+        </div>
+    </section>
+
+    <!------ Footer ------->
+
+    <section class="footer">
+        <h4>About Us</h4>
+        <p>For general inquiries, you can contact Harvard University at:</p>
+        <div class="icons">
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-linkedin-in"></i>
+        </div>
+        <div class="footer-text">
+            <p>Made with <i class="fa fa-heart"></i> by Adil Shamim</p>
+        </div>
+    </section>
+
+    <!----JavaScript for Toggle Menu----->
+
+    <script>
+        var navLinks = document.getElementById("navLinks");
+        function showMenu() {
+            navLinks.style.right = "0";
+        }
+        function hideMenu() {
+            navLinks.style.right = "-200px";
+        }
+    </script>
+</body>
+</html>
