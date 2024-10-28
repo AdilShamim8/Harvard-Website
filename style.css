@@ -1,0 +1,561 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.header{
+    min-height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(4, 9, 30, 0.7), rgba(4, 9, 30, 0.7)), url(images/Harvard\ banner.jpg);
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+nav {
+    display: flex;
+    padding: 2% 6%;
+    justify-content: space-between;
+    align-items: center;
+}
+nav {
+    display: flex;
+    padding: 2% 6%;
+    justify-content: space-between;
+    align-items: center;
+}
+nav img {
+    width: 150px;
+}
+.nav-links {
+    flex: 1;
+    text-align: right;
+}
+.nav-links ul li {
+    list-style: none;
+    display: inline-block;
+    padding: 8px 12px;
+    position: relative;
+}
+.nav-links ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+}
+.nav-links ul li:hover{
+    border: 1px solid light;
+    background: rgb(140, 184, 140);
+    transition: all 0.5s;
+}
+
+.text-box{
+    width: 90%;
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+}
+.text-box h1{
+    font-size: 62px;
+}
+.text-box p{
+    margin: 10px 0 40px;
+    font-size: 14px;
+    color: #fff;
+}
+
+.hero-btn {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 12px 34px;
+    font-size: 13px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+.hero-btn:hover {
+    border: 1px solid light;
+    background: rgb(180, 226, 255);
+    transition: all 1s; 
+}
+nav .fa {
+    display: none;
+}
+@media (max-width: 700px) {
+    .text-box h1 {
+        font-size: 20px;
+    }
+    .nav-links ul li {
+        display: block;
+    }
+    .nav-links {
+        position: absolute;
+        background: skyblue;
+        height: 100vh;
+        width: 200px;
+        top: 0;
+        right: -200px;
+        text-align: left;
+        z-index: 2;
+        transform: all 1s;
+    }
+    nav .fa {
+        display: block;
+        color: #fff; 
+        font-size: 22px;
+        cursor: pointer;
+    }
+    .nav-links ul {
+        padding: 30px;
+    }
+}
+
+/*------ course -------*/
+.course{
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 100px;
+}
+h1{
+    font-size: 36px;
+    font-weight: 600;
+}
+p{
+    color: lightslategray;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 22px;
+    padding: 10px;
+}
+.course-col{
+    flex-basis: 60%;
+    background: rgb(255, 225, 229);
+    border-radius: 80px; 
+    margin-bottom: 1%;
+    padding: 10px 5px;
+    box-sizing: border-box;
+    transition: all 1s;
+}
+h3{
+    text-align: center;
+    font-weight: 600;
+    margin: 10px 0;
+}
+.course-col:hover{
+    box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
+}
+
+
+/*----------- campus --------*/
+.campus {
+    padding: 50px 0;
+    text-align: center;
+}
+.campus h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+.campus p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+.campus .row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.campus-col {
+    flex-basis: 31%;
+    margin: 10px;
+    position: relative;
+}
+.campus-col img {
+    width: 100%;
+    height: auto;
+}
+.campus-col .layer {
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.campus-col:hover .layer {
+    opacity: 1;
+}
+
+/* Mobile version */
+@media (max-width: 768px) {
+    .campus h1 {
+        font-size: 28px;
+    }
+    .campus p {
+        font-size: 16px;
+    }
+    .campus-col {
+        flex-basis: 100%;
+        margin: 10px 0;
+    }
+}
+
+
+/*------- facilities -------*/
+.facilities {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 100px;
+}
+
+.row1 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 20px; /* Adds spacing between columns */
+}
+
+.facilities-col {
+    flex-basis: calc(33.33% - 20px); /* Three equal columns with spacing */
+    border-radius: 10px;
+    margin-bottom: 5%;
+    text-align: left;
+    box-sizing: border-box;
+}
+
+.facilities-col img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover; /* Ensures the image covers the area without distortion */
+}
+
+.facilities-col p {
+    padding: 0;
+    margin-top: 10px; /* Adds space between paragraphs and other elements */
+}
+
+.facilities-col h3 {
+    margin-top: 16px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 768px) {
+    .facilities-col {
+        flex-basis: calc(48% - 20px); /* Two columns per row on tablets */
+    }
+}
+
+@media (max-width: 480px) {
+    .facilities-col {
+        flex-basis: 100%; /* Full-width for each column on small screens */
+        margin-bottom: 10%; /* Increases spacing for better readability */
+    }
+}
+
+
+
+
+/*-------- Call To ACtion ------*/
+.cta{
+    margin: 100px auto;
+    width: 80%;
+    background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)),url(images/banner2.jpg);
+    background-position: center;
+    background-size: cover;
+    border-radius: 10px;
+    text-align: center;
+    padding: 100px 0;
+}
+
+.cta h1{
+    color: #fff;
+    margin-bottom: 40px;
+    padding: 0;
+}
+@media(max-width: 700px){
+    .cta h1{
+        font: size 23px;
+    }
+}
+
+
+
+/*-------- Footer ------*/
+.footer{
+    width: 100%;
+    text-align: center;
+    padding: 30px 0;
+}
+
+.footer h4{
+    margin-bottom: 25px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+
+
+.icons {
+    font-size: 24px; /* Adjust size as needed */
+    color: #333; /* Adjust color as needed */
+}
+
+.icons i {
+    margin: 0 10px; /* Adjust spacing as needed */
+    transition: color 0.3s ease;
+}
+
+.icons i:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+
+
+
+
+
+
+
+
+
+
+:root {
+    --text-color: #555;
+    --icon-color: #e25555;
+    --icon-hover-color: #1e90ff; /* Light blue color for hover effect */
+    --background-color: #f9f9f9;
+    --background-hover-color: #d3f0ff; /* Light blue background on hover */
+    --border-radius: 12px; /* Increased border radius */
+    --box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Enhanced shadow */
+    --font-size: 16px;
+    --icon-size: 24px; /* Slightly larger icon size */
+    --margin-vertical: 20px;
+    --padding: 15px; /* Increased padding */
+    --transition-duration: 0.4s; /* Slightly longer transition duration */
+}
+
+.footer-text {
+    font-size: var(--font-size);
+    color: var(--text-color);
+    text-align: center;
+    margin: var(--margin-vertical) 0;
+    padding: var(--padding);
+    background-color: var(--background-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern font */
+    transition: background-color var(--transition-duration), transform var(--transition-duration), box-shadow var(--transition-duration); /* Smooth transitions */
+}
+
+.footer-text:hover {
+    background-color: var(--background-hover-color); /* Light blue background on hover */
+    transform: scale(1.05) rotate(1deg); /* Slightly enlarge and rotate the container on hover */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* More pronounced shadow on hover */
+}
+
+.footer-text i {
+    color: var(--icon-color);
+    font-size: var(--icon-size);
+    vertical-align: middle;
+    margin: 0 8px; /* Increased spacing around the icon */
+    transition: color var(--transition-duration), transform var(--transition-duration); /* Smooth transitions */
+}
+
+.footer-text i:hover {
+    color: var(--icon-hover-color); /* Change icon color on hover */
+    transform: scale(1.2) rotate(-15deg); /* Enlarge and rotate icon on hover */
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ----------------- About us page --------------- */
+.sub-header {
+    height: 50vh;
+    width: 100%;
+    background-image: linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(images/background.jpg);
+    background-position: center;
+    background-size: cover;
+    text-align: center;
+    color: #fff;
+}
+
+.about-us {
+    width: 80%;
+    margin: auto;
+    padding-top: 80px;
+    padding-bottom: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.about-col {
+    flex-basis: 48%;
+    padding: 30px 2px;
+}
+
+.about-col h1 {
+    padding-top: 0;
+}
+
+.red-btn {
+    border: 1px solid #d3f0ff;
+    background: transparent;
+    color: rgb(27, 27, 27);
+}
+
+.image {
+    flex-basis: 48%;
+    padding: 30px 2px;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+
+
+
+
+
+
+/*-------------- Blog content ----------*/
+
+/*-------------- Blog content ----------*/
+
+.blog-content {
+    width: 80%;
+    margin: auto;
+    padding: 70px 0;
+}
+
+.blog-left {
+    flex-basis: 50%;
+}
+
+.blog-left img {
+    width: 100%;
+}
+
+.blog-left h2 {
+    color: #222;
+    font-weight: 600;
+    margin: 30px 0;
+}
+
+.blog-left p {
+    color: #999;
+    padding: 0;
+}
+
+.blog-right {
+    flex-basis: 32%;
+}
+
+.blog-right h3 {
+    background: #c5ffdd;
+    color: #757575; /* Changed to white for better contrast */
+    padding: 7px 0;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+.blog-right div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #555;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+/*-------------- Comment Section ----------*/
+
+.comment-box {
+    margin-top: 40px;
+}
+
+.comment-box h3 {
+    color: #222;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.comment-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-form input,
+.comment-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.comment-form button {
+    width: 150px;
+    padding: 10px;
+    background-color: #ff4b5c;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    align-self: flex-start;
+}
+
+.comment-form button:hover {
+    background-color: #e0434e;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*---------- CONTACT -----------*/
+
