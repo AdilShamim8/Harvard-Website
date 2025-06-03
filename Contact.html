@@ -3,68 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us</title>
+    <title>Contact Us - Harvard University</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
-        /*-------------- Contact Page Styles ----------*/
+        :root {
+            /* Light theme variables */
+            --bg-color: #f0f8ff; /* Light skyblue background */
+            --text-color: #2c3e50;
+            --container-bg: #ffffff;
+            --input-bg: #ffffff;
+            --input-border: #87ceeb;
+            --primary-color: #87ceeb; /* Skyblue */
+            --hover-color: #4682b4; /* Steel blue for hover */
+            --shadow-color: rgba(135, 206, 235, 0.2);
+            --nav-bg: #4682b4; /* Steel blue for nav */
+            --nav-text: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            /* Dark theme variables */
+            --bg-color: #1a2634;
+            --text-color: #e0e0e0;
+            --container-bg: #2c3e50;
+            --input-bg: #34495e;
+            --input-border: #87ceeb;
+            --primary-color: #87ceeb; /* Skyblue */
+            --hover-color: #00bfff; /* Deep skyblue for hover */
+            --shadow-color: rgba(135, 206, 235, 0.1);
+            --nav-bg: #1a2634;
+            --nav-text: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
 
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
         }
 
         .navbar {
             width: 100%;
-            background-color: #333;
+            background-color: var(--nav-bg);
             overflow: auto;
-            padding: 10px 0;
+            padding: 15px 0;
             text-align: center;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px var(--shadow-color);
         }
 
         .navbar a {
-            color: #fff;
+            color: var(--nav-text);
             padding: 12px 20px;
             text-decoration: none;
             display: inline-block;
             font-size: 1em;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            border-radius: 5px;
+            margin: 0 5px;
         }
 
         .navbar a:hover {
-            background-color: #0ee2a3;
+            background-color: var(--primary-color);
+            color: var(--nav-bg);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--nav-bg);
+            font-size: 1.2em;
+            z-index: 1001;
+            box-shadow: 0 2px 5px var(--shadow-color);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--hover-color);
         }
 
         .contact-page {
-            width: 80%;
-            margin: auto;
-            padding: 60px 0;
+            width: 90%;
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 20px;
         }
 
         .container {
             display: flex;
             flex-wrap: wrap;
             justify-content: space-between;
-            background: #fff;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+            background: var(--container-bg);
+            padding: 30px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            border-radius: 15px;
+            gap: 30px;
+            border: 1px solid var(--primary-color);
         }
 
         .contact-info {
-            flex-basis: 45%;
+            flex: 1;
+            min-width: 300px;
         }
 
         .contact-info h2 {
-            color: #333;
+            color: var(--primary-color);
             margin-bottom: 20px;
-            font-size: 2em;
+            font-size: 2.2em;
         }
 
         .contact-info p {
-            color: #666;
-            margin-bottom: 20px;
-            line-height: 1.6;
+            color: var(--text-color);
+            margin-bottom: 25px;
+            font-size: 1.1em;
         }
 
         .contact-info ul {
@@ -73,69 +142,132 @@
         }
 
         .contact-info ul li {
-            margin-bottom: 10px;
-            color: #555;
+            margin-bottom: 15px;
+            color: var(--text-color);
             font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact-info ul li i {
+            color: var(--primary-color);
+            font-size: 1.2em;
         }
 
         .contact-form {
-            flex-basis: 45%;
+            flex: 1;
+            min-width: 300px;
         }
 
         .contact-form h3 {
-            color: #333;
-            margin-bottom: 20px;
+            color: var(--primary-color);
+            margin-bottom: 25px;
             font-size: 1.8em;
         }
 
         .contact-form form {
             display: flex;
             flex-direction: column;
+            gap: 15px;
+        }
+
+        .form-group {
+            position: relative;
         }
 
         .contact-form input,
         .contact-form textarea {
             width: 100%;
             padding: 15px;
-            margin-bottom: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            border: 2px solid var(--input-border);
+            border-radius: 8px;
             font-size: 1em;
-            transition: border-color 0.3s;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            transition: all 0.3s;
         }
 
         .contact-form input:focus,
         .contact-form textarea:focus {
-            border-color: #0ee2a3;
+            border-color: var(--primary-color);
             outline: none;
+            box-shadow: 0 0 8px var(--primary-color);
         }
 
         .contact-form button {
-            width: 150px;
+            width: 180px;
             padding: 15px;
-            background-color: #00ac1d;
-            color: #fff;
+            background-color: var(--primary-color);
+            color: var(--nav-bg);
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            align-self: flex-start;
-            transition: background-color 0.3s;
+            font-size: 1.1em;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
         .contact-form button:hover {
-            background-color: #1fd0dd;
+            background-color: var(--hover-color);
+            transform: translateY(-2px);
+        }
+
+        .contact-form button:active {
+            transform: translateY(0);
+        }
+
+        .success-message {
+            display: none;
+            color: var(--primary-color);
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 10px 0;
+            }
+
+            .navbar a {
+                padding: 8px 15px;
+                font-size: 0.9em;
+            }
+
+            .contact-page {
+                width: 95%;
+                margin-top: 80px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .contact-info h2,
+            .contact-form h3 {
+                font-size: 1.8em;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </button>
 
     <!-- Navigation Bar -->
     <div class="navbar">
-        <a href="index.html" target="_blank">Go Home</a>
-        <a href="About.html" target="_blank">About Us</a>
-        <a href="Contact.html" target="_blank">Contact Us</a>
-        <a href="Course.html" target="_blank">Course</a>
-        <a href="Blog.html" target="_blank">Blog</a>
+        <a href="index.html">Home</a>
+        <a href="About.html">About</a>
+        <a href="Course.html">Courses</a>
+        <a href="Blog.html">Blog</a>
+        <a href="Contact.html">Contact</a>
     </div>
 
     <!-- Contact Page Content -->
@@ -143,23 +275,82 @@
         <div class="container">
             <div class="contact-info">
                 <h2>Contact Us</h2>
-                <p>If you have any questions, feel free to reach out to us!</p>
+                <p>Have questions? We're here to help! Reach out to us through any of the following channels:</p>
                 <ul>
-                    <li><strong>Email:</strong> adilshamim696@gmail.com</li>
-                    <li><strong>Phone:</strong> +123 456 7890</li>
-                    <li><strong>Address:</strong> 123 Street, City, Country</li>
+                    <li><i class="fas fa-envelope"></i> <strong>Email:</strong> contact@harvard.edu</li>
+                    <li><i class="fas fa-phone"></i> <strong>Phone:</strong> +1 (617) 495-1000</li>
+                    <li><i class="fas fa-map-marker-alt"></i> <strong>Address:</strong> Massachusetts Hall, Cambridge, MA 02138</li>
+                    <li><i class="fas fa-clock"></i> <strong>Hours:</strong> Monday - Friday, 9:00 AM - 5:00 PM EST</li>
                 </ul>
             </div>
             <div class="contact-form">
                 <h3>Send Us a Message</h3>
-                <form>
-                    <input type="text" name="name" placeholder="Your Name" required>
-                    <input type="email" name="email" placeholder="Your Email" required>
-                    <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
-                    <button type="submit">Send Message</button>
+                <form id="contactForm" onsubmit="return handleSubmit(event)">
+                    <div class="form-group">
+                        <input type="text" name="name" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" name="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
                 </form>
+                <div id="successMessage" class="success-message">
+                    Thank you for your message! We'll get back to you soon.
+                </div>
             </div>
         </div>
     </section>
+
+    <script>
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle i');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggle.classList.remove('fa-sun');
+                themeToggle.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.classList.remove('fa-moon');
+                themeToggle.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // Form submission handling
+        function handleSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const successMessage = document.getElementById('successMessage');
+            
+            // Simulate form submission
+            form.style.display = 'none';
+            successMessage.style.display = 'block';
+            
+            // Reset form after 3 seconds
+            setTimeout(() => {
+                form.reset();
+                form.style.display = 'flex';
+                successMessage.style.display = 'none';
+            }, 3000);
+            
+            return false;
+        }
+    </script>
 </body>
 </html>
