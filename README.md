@@ -66,7 +66,7 @@ Designed and developed with passion by Adil Shamim.
 
 1. Clone the repository
 ```bash
-git clone https://github.com/adilshamim8/harvard-website.git
+git clone https://github.com/AdilShamim8/Harvard-Website.git
 ```
 
 2. Open `index.html` in your browser
