@@ -1,121 +1,537 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Web Site Design</title>
+    <title>Courses - Harvard University</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            /* Light theme variables */
+            --bg-color: #f0f8ff;
+            --text-color: #2c3e50;
+            --container-bg: #ffffff;
+            --primary-color: #87ceeb;
+            --hover-color: #4682b4;
+            --shadow-color: rgba(135, 206, 235, 0.2);
+            --nav-bg: #4682b4;
+            --nav-text: #ffffff;
+            --card-bg: #ffffff;
+            --card-border: #e0e0e0;
+            --accent-color: #ff6b6b;
+            --success-color: #2ecc71;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a2634;
+            --text-color: #e0e0e0;
+            --container-bg: #2c3e50;
+            --primary-color: #87ceeb;
+            --hover-color: #00bfff;
+            --shadow-color: rgba(135, 206, 235, 0.1);
+            --nav-bg: #1a2634;
+            --nav-text: #ffffff;
+            --card-bg: #2c3e50;
+            --card-border: #3d4d5d;
+            --accent-color: #ff6b6b;
+            --success-color: #2ecc71;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--nav-bg);
+            font-size: 1.2em;
+            z-index: 1001;
+            box-shadow: 0 2px 5px var(--shadow-color);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--hover-color);
+        }
+
+        .course {
+            width: 90%;
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 20px;
+        }
+
+        .course-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .course-header h1 {
+            color: var(--primary-color);
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .course-header p {
+            color: var(--text-color);
+            line-height: 1.8;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .course-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px var(--shadow-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--card-border);
+        }
+
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px var(--shadow-color);
+        }
+
+        .course-card-header {
+            background: var(--primary-color);
+            color: var(--nav-bg);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .course-card-header h3 {
+            margin: 0;
+            font-size: 1.4em;
+        }
+
+        .course-card-content {
+            padding: 20px;
+        }
+
+        .course-card-content p {
+            color: var(--text-color);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .course-features {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+        }
+
+        .course-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid var(--card-border);
+            color: var(--text-color);
+        }
+
+        .course-features li:last-child {
+            border-bottom: none;
+        }
+
+        .course-features li i {
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+
+        .course-cta {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .enroll-btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary-color);
+            color: var(--nav-bg);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .enroll-btn:hover {
+            background: var(--hover-color);
+            transform: translateY(-2px);
+        }
+
+        .facilities {
+            background: var(--container-bg);
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+
+        .facilities h2 {
+            text-align: center;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            font-size: 2em;
+        }
+
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .facility-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px var(--shadow-color);
+            transition: transform 0.3s;
+            border: 1px solid var(--card-border);
+        }
+
+        .facility-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .facility-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .facility-card-content {
+            padding: 20px;
+        }
+
+        .facility-card-content h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+
+        .facility-card-content p {
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .course-filter {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: var(--container-bg);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary-color);
+            color: var(--nav-bg);
+        }
+
+        @media (max-width: 768px) {
+            .course {
+                width: 95%;
+                margin-top: 80px;
+            }
+
+            .course-grid,
+            .facilities-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .filter-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <section class="sub-header">
         <nav>
-            <a href="index.html"> <img src="images/Harvard logo.png" alt="Logo"> </a>
+            <a href="index.html"> <img src="images/Harvard logo.png" alt="Harvard University Logo"> </a>
             <div class="nav-links" id="navLinks">
                 <i class="fa fa-times" onclick="hideMenu()"></i>
                 <ul>
-                    <li><a href="index.html" target="_blank">Go Home</a></li>
-                    <li><a href="About.html" target="_blank">About Us</a></li>
-                    <li><a href="Course.html" target="_blank">Course</a></li>
-                    <li><a href="Blog.html" target="_blank">Blog</a></li>
-                    <li><a href="Contact.html" target="_blank">Contact Us</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Course.html">Courses</a></li>
+                    <li><a href="Blog.html">Blog</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
                 </ul>
             </div>
             <i class="fa fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1> Our Courses </h1>
+        <h1>Our Courses</h1>
     </section>
 
-    <!---------------------- Course  ------------------------>
-
     <section class="course">
-        <h1>Discover Our Enhanced Course Offerings</h1>
-        <p>At Harvard University, our Computer Science and Engineering (CSE) program offers a comprehensive range of courses designed to equip students with the skills and knowledge needed to excel in the tech industry. Our curriculum includes foundational courses such as <strong>Introduction to Programming</strong>, where students learn the basics of coding and algorithm design, and <strong>Data Structures and Algorithms</strong>, which delves into efficient data management and problem-solving techniques. Advanced courses like <strong>Machine Learning</strong> cover topics such as neural networks and deep learning, while <strong>Data Science</strong> focuses on data analysis, visualization, and statistical methods. We also offer specialized courses in <strong>Web Development</strong>, teaching students to build dynamic and responsive websites using modern frameworks like React and Node.js. Each course is designed to provide a balance of theoretical understanding and practical application, ensuring that our graduates are well-prepared for the challenges of the modern tech landscape. Our experienced faculty and state-of-the-art facilities create an ideal environment for learning and innovation, making Harvard University a top choice for aspiring computer scientists and engineers.</p>
-        
-        <div class="row">
-            <div class="course-col">
-                <h3>1. Introduction to Programming</h3>
-                <p>Description: This foundational course introduces students to the basics of programming. Students learn to write simple programs, understand algorithms, and solve problems using code.<br>
-                    Key Topics: Variables, control structures, functions, and basic data structures.<br>
-                    Benefits: Provides a strong foundation for further studies in computer science and software development.</p>
-            </div>
-            <div class="course-col">
-                <h3>2. Data Structures and Algorithms</h3>
-                <p>Description: This course delves into efficient data management and problem-solving techniques. Students learn about various data structures and algorithms, their implementation, and their applications.<br>
-                    Key Topics: Arrays, linked lists, stacks, queues, trees, graphs, sorting, and searching algorithms.<br>
-                    Benefits: Equips students with essential skills for optimizing and solving complex computational problems.</p>
-            </div>
-            <div class="course-col">
-                <h3>3. Machine Learning</h3>
-                <p>Description: An advanced course that covers machine learning techniques and their applications. Students explore various algorithms and models used in machine learning.<br>
-                    Key Topics: Supervised and unsupervised learning, neural networks, deep learning, and natural language processing.<br>
-                    Benefits: Prepares students for careers in AI and data science with hands-on projects and real-world applications.</p>
-            </div>
-            <div class="course-col">
-                <h3>4. Data Science</h3>
-                <p>Description: This course focuses on data analysis, visualization, and statistical methods. Students learn to extract insights from data and make data-driven decisions.<br>
-                    Key Topics: Data cleaning, exploratory data analysis, statistical inference, and machine learning.<br>
-                    Benefits: Provides the skills needed to analyze and interpret data, making students valuable in various industries.</p>
-            </div>
-            <div class="course-col">
-                <h3>5. Web Development</h3>
-                <p>Description: A comprehensive course on building dynamic and responsive websites. Students learn to use modern web development frameworks and tools.<br>
-                    Key Topics: HTML, CSS, JavaScript, React, Node.js, and responsive design.<br>
-                    Benefits: Enables students to develop a portfolio of web projects and gain the skills needed for a career in web development.</p>
+        <div class="course-header">
+            <h1>Discover Our Enhanced Course Offerings</h1>
+            <p>At Harvard University, our Computer Science and Engineering (CSE) program offers a comprehensive range of courses designed to equip students with the skills and knowledge needed to excel in the tech industry. Our curriculum combines theoretical understanding with practical application, ensuring our graduates are well-prepared for the challenges of the modern tech landscape.</p>
+        </div>
+
+        <div class="course-filter">
+            <div class="filter-buttons">
+                <button class="filter-btn active" data-filter="all">All Courses</button>
+                <button class="filter-btn" data-filter="beginner">Beginner</button>
+                <button class="filter-btn" data-filter="intermediate">Intermediate</button>
+                <button class="filter-btn" data-filter="advanced">Advanced</button>
             </div>
         </div>
-    </section> 
 
-    <!---------- Facilities ------------->
+        <div class="course-grid">
+            <div class="course-card" data-level="beginner">
+                <div class="course-card-header">
+                    <h3>Introduction to Programming</h3>
+                </div>
+                <div class="course-card-content">
+                    <p>This foundational course introduces students to the basics of programming, focusing on problem-solving and algorithmic thinking.</p>
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> Variables and Data Types</li>
+                        <li><i class="fas fa-check"></i> Control Structures</li>
+                        <li><i class="fas fa-check"></i> Functions and Methods</li>
+                        <li><i class="fas fa-check"></i> Basic Data Structures</li>
+                    </ul>
+                    <div class="course-cta">
+                        <a href="#" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" data-level="intermediate">
+                <div class="course-card-header">
+                    <h3>Data Structures and Algorithms</h3>
+                </div>
+                <div class="course-card-content">
+                    <p>Master the fundamentals of data organization and algorithm design for efficient problem-solving.</p>
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> Arrays and Linked Lists</li>
+                        <li><i class="fas fa-check"></i> Stacks and Queues</li>
+                        <li><i class="fas fa-check"></i> Trees and Graphs</li>
+                        <li><i class="fas fa-check"></i> Sorting and Searching</li>
+                    </ul>
+                    <div class="course-cta">
+                        <a href="#" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" data-level="advanced">
+                <div class="course-card-header">
+                    <h3>Machine Learning</h3>
+                </div>
+                <div class="course-card-content">
+                    <p>Explore the cutting-edge field of machine learning and artificial intelligence.</p>
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> Neural Networks</li>
+                        <li><i class="fas fa-check"></i> Deep Learning</li>
+                        <li><i class="fas fa-check"></i> Natural Language Processing</li>
+                        <li><i class="fas fa-check"></i> Computer Vision</li>
+                    </ul>
+                    <div class="course-cta">
+                        <a href="#" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" data-level="intermediate">
+                <div class="course-card-header">
+                    <h3>Data Science</h3>
+                </div>
+                <div class="course-card-content">
+                    <p>Learn to extract insights from data and make data-driven decisions.</p>
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> Data Analysis</li>
+                        <li><i class="fas fa-check"></i> Statistical Methods</li>
+                        <li><i class="fas fa-check"></i> Data Visualization</li>
+                        <li><i class="fas fa-check"></i> Machine Learning Basics</li>
+                    </ul>
+                    <div class="course-cta">
+                        <a href="#" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" data-level="intermediate">
+                <div class="course-card-header">
+                    <h3>Web Development</h3>
+                </div>
+                <div class="course-card-content">
+                    <p>Master modern web development with the latest frameworks and tools.</p>
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> HTML5 & CSS3</li>
+                        <li><i class="fas fa-check"></i> JavaScript & React</li>
+                        <li><i class="fas fa-check"></i> Node.js & Express</li>
+                        <li><i class="fas fa-check"></i> Database Integration</li>
+                    </ul>
+                    <div class="course-cta">
+                        <a href="#" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" data-level="advanced">
+                <div class="course-card-header">
+                    <h3>Cybersecurity</h3>
+                </div>
+                <div class="course-card-content">
+                    <p>Learn to protect systems and networks from digital attacks.</p>
+                    <ul class="course-features">
+                        <li><i class="fas fa-check"></i> Network Security</li>
+                        <li><i class="fas fa-check"></i> Cryptography</li>
+                        <li><i class="fas fa-check"></i> Ethical Hacking</li>
+                        <li><i class="fas fa-check"></i> Security Protocols</li>
+                    </ul>
+                    <div class="course-cta">
+                        <a href="#" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <section class="facilities">
         <h2>Harvard University Facilities</h2>
-        <p>Harvard University offers a wide range of facilities to support its students, faculty, and staff. Here are some highlights:</p>
-        
-        <div class="row1">
-            <div class="facilities-col">
+        <div class="facilities-grid">
+            <div class="facility-card">
                 <img src="images/library.png" alt="Harvard Library System">
-                <h3>Harvard Library System</h3>
-                <p>One of the largest academic library systems in the world, offering extensive resources for research and study. It provides access to millions of books, journals, and digital resources, supporting both academic and personal growth.</p>
+                <div class="facility-card-content">
+                    <h3>Harvard Library System</h3>
+                    <p>One of the largest academic library systems in the world, offering extensive resources for research and study. Access millions of books, journals, and digital resources.</p>
+                </div>
             </div>
-            <div class="facilities-col">
-                <img src="images/cafeteria.png" alt="Harvard University Cafeteria Facilities">
-                <h3>Harvard University Cafeteria Facilities</h3>
-                <p>Harvard University’s dining facilities are designed to provide a welcoming and nourishing environment for all students. From the historic Annenberg Dining Hall to the convenient campus cafes, there are plenty of options to suit every taste and dietary need.</p>
+            <div class="facility-card">
+                <img src="images/cafeteria.png" alt="Harvard University Cafeteria">
+                <div class="facility-card-content">
+                    <h3>Dining Facilities</h3>
+                    <p>From the historic Annenberg Dining Hall to campus cafes, enjoy diverse dining options that cater to all tastes and dietary needs.</p>
+                </div>
             </div>
-            <div class="facilities-col">
-                <img src="images/basketball.png" alt="Harvard University Basketball Facilities">
-                <h3>Harvard University Basketball Facilities</h3>
-                <p>Harvard University provides excellent facilities for basketball enthusiasts, from the historic Lavietes Pavilion to the versatile Malkin Athletic Center. These venues offer state-of-the-art amenities and a supportive environment for both competitive athletes and recreational players.</p>
+            <div class="facility-card">
+                <img src="images/basketball.png" alt="Harvard University Sports Facilities">
+                <div class="facility-card-content">
+                    <h3>Sports Facilities</h3>
+                    <p>State-of-the-art athletic facilities including the Lavietes Pavilion and Malkin Athletic Center, perfect for both competitive and recreational sports.</p>
+                </div>
             </div>
         </div>
     </section>
-
-    <!------ Footer ------->
 
     <section class="footer">
         <h4>About Us</h4>
-        <p>For general inquiries, you can contact Harvard University at:</p>
+        <p>Harvard University is committed to excellence in teaching, learning, and research, and to developing leaders who make a difference globally.</p>
         <div class="icons">
-            <i class="fab fa-facebook-f"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-twitter"></i>
-            <i class="fab fa-linkedin-in"></i>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <div class="footer-text">
-            <p>Made <i class="fa fa-heart"></i> by Adil Shamim</p>
+            <p>Made with <i class="fa fa-heart"></i> by Adil Shamim</p>
         </div>
     </section>
 
-    <!----JavaScript for Toggle Menu----->
-
     <script>
-        var navLinks = document.getElementById("navLinks");
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle i');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggle.classList.remove('fa-sun');
+                themeToggle.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.classList.remove('fa-moon');
+                themeToggle.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // Mobile menu functionality
         function showMenu() {
-            navLinks.style.right = "0";
+            document.getElementById("navLinks").style.right = "0";
         }
+
         function hideMenu() {
-            navLinks.style.right = "-200px";
+            document.getElementById("navLinks").style.right = "-200px";
         }
+
+        // Course filtering functionality
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const courseCards = document.querySelectorAll('.course-card');
+
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                const filter = button.getAttribute('data-filter');
+
+                courseCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-level') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
     </script>
 </body>
 </html>
