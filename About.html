@@ -1,96 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Web Site Design</title>
+    <title>About Us - Harvard University</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            /* Light theme variables */
+            --bg-color: #f0f8ff;
+            --text-color: #2c3e50;
+            --container-bg: #ffffff;
+            --primary-color: #87ceeb;
+            --hover-color: #4682b4;
+            --shadow-color: rgba(135, 206, 235, 0.2);
+            --nav-bg: #4682b4;
+            --nav-text: #ffffff;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a2634;
+            --text-color: #e0e0e0;
+            --container-bg: #2c3e50;
+            --primary-color: #87ceeb;
+            --hover-color: #00bfff;
+            --shadow-color: rgba(135, 206, 235, 0.1);
+            --nav-bg: #1a2634;
+            --nav-text: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--nav-bg);
+            font-size: 1.2em;
+            z-index: 1001;
+            box-shadow: 0 2px 5px var(--shadow-color);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--hover-color);
+        }
+
+        .blog-content {
+            width: 90%;
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 20px;
+        }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .blog-left {
+            flex: 2;
+            min-width: 300px;
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .blog-left img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .blog-left h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .blog-left p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .blog-right {
+            flex: 1;
+            min-width: 250px;
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            border: 1px solid var(--primary-color);
+            height: fit-content;
+        }
+
+        .blog-right h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .blog-right div {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--primary-color);
+        }
+
+        .blog-right div:last-child {
+            border-bottom: none;
+        }
+
+        .blog-right span {
+            color: var(--text-color);
+        }
+
+        .blog-right span:last-child {
+            background: var(--primary-color);
+            color: var(--nav-bg);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .comment-box {
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .comment-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background-color: var(--container-bg);
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            outline: none;
+            box-shadow: 0 0 8px var(--primary-color);
+        }
+
+        .red-btn {
+            background-color: var(--primary-color) !important;
+            color: var(--nav-bg) !important;
+            border: none !important;
+            padding: 15px 30px !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            font-weight: bold !important;
+            transition: all 0.3s !important;
+            width: fit-content !important;
+        }
+
+        .red-btn:hover {
+            background-color: var(--hover-color) !important;
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .blog-content {
+                width: 95%;
+                margin-top: 80px;
+            }
+
+            .blog-left,
+            .blog-right {
+                padding: 20px;
+            }
+
+            .blog-left h2 {
+                font-size: 1.8em;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <section class="sub-header">
         <nav>
-            <a href="Index.html"> <img src="images/Harvard logo.png" alt="Logo"> </a>
+            <a href="index.html"> <img src="images/Harvard logo.png" alt="Harvard University Logo"> </a>
             <div class="nav-links" id="navLinks">
                 <i class="fa fa-times" onclick="hideMenu()"></i>
                 <ul>
-                    <li><a href="index.html" target="_blank">Go Home</a></li>
-                    <li><a href="About.html" target="_blank">About Us</a></li>
-                    <li><a href="Contact.html" target="_blank">Contact Us</a></li>
-                    <li><a href="Course.html" target="_blank">Course</a></li>
-                    <li><a href="Blog.html" target="_blank">Blog</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Course.html">Courses</a></li>
+                    <li><a href="Blog.html">Blog</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
                 </ul>
             </div>
             <i class="fa fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1> Our Certificate And Online Programs For 2024 </h1>
+        <h1>Our Certificate And Online Programs For 2024</h1>
     </section>
 
-    <!------------- Blog page content ---------------->
     <section class="blog-content">
         <div class="row">
             <div class="blog-left">
-                <img src="images/certificate2.jpg" alt="Certificate">
+                <img src="images/certificate2.jpg" alt="Harvard University Certificate Programs">
                 <h2>Our Certificate And Online Programs For 2024</h2>
-                <p>CS50’s Web Programming with Python and JavaScript - Focuses on web development using Python, JavaScript, and frameworks like Django and React.</p>
-                <p>CS50’s Introduction to Artificial Intelligence with Python - Covers the basics of AI and machine learning using Python.</p>
-                <p>CS50’s Introduction to Cybersecurity - Teaches how to protect data, devices, and systems from threats.</p>
-                <p>CS109A: Introduction to Data Science - An introduction to data science using Python.</p>
-                <p>CS182: Artificial Intelligence - Advanced topics in AI, including machine learning, neural networks, and natural language processing.</p>
+                <p>Harvard University offers a comprehensive range of certificate and online programs designed to provide cutting-edge education in various fields. Our programs combine academic excellence with practical skills to prepare students for success in their chosen careers.</p>
+                
+                <h3>Computer Science Programs</h3>
+                <p><strong>CS50's Web Programming with Python and JavaScript</strong><br>
+                Master modern web development using Python, JavaScript, and frameworks like Django and React. Learn to build dynamic, responsive web applications.</p>
+
+                <p><strong>CS50's Introduction to Artificial Intelligence with Python</strong><br>
+                Explore the fundamentals of AI and machine learning using Python. Gain hands-on experience with neural networks, natural language processing, and computer vision.</p>
+
+                <p><strong>CS50's Introduction to Cybersecurity</strong><br>
+                Learn essential cybersecurity concepts and practices. Understand how to protect data, devices, and systems from various threats and vulnerabilities.</p>
+
+                <h3>Data Science Programs</h3>
+                <p><strong>CS109A: Introduction to Data Science</strong><br>
+                A comprehensive introduction to data science using Python. Learn data analysis, visualization, and statistical methods.</p>
+
+                <p><strong>CS182: Artificial Intelligence</strong><br>
+                Advanced topics in AI, including machine learning, neural networks, and natural language processing. Perfect for those looking to specialize in AI research and development.</p>
             </div>
             <div class="blog-right">
-                <h3>Post Categories</h3>
+                <h3>Program Categories</h3>
                 <div>
-                    <span>Core Computer Science</span>
+                    <span>Computer Science</span>
+                    <span>5</span>
+                </div>
+                <div>
+                    <span>Artificial Intelligence</span>
                     <span>4</span>
                 </div>
                 <div>
-                    <span>Artificial Intelligence and Machine Learning</span>
-                    <span>3</span>
-                </div>
-                <div>
-                    <span>Data Science and Analytics</span>
+                    <span>Data Science</span>
                     <span>3</span>
                 </div>
                 <div>
                     <span>Cybersecurity</span>
                     <span>3</span>
                 </div>
+                <div>
+                    <span>Web Development</span>
+                    <span>4</span>
+                </div>
             </div>
         </div>
         <div class="comment-box">
-            <h3>Leave a comment</h3>
-            <form class="comment-form">
-                <input type="text" placeholder="Enter Your Name">
-                <input type="email" placeholder="Enter Your Email">
-                <textarea rows="5" placeholder="Your Comment"></textarea>
-                <button type="submit" class="hero-btn red-btn">POST COMMENT</button>
+            <h3>Leave a Comment</h3>
+            <form class="comment-form" onsubmit="return handleSubmit(event)">
+                <input type="text" placeholder="Enter Your Name" required>
+                <input type="email" placeholder="Enter Your Email" required>
+                <textarea rows="5" placeholder="Your Comment" required></textarea>
+                <button type="submit" class="hero-btn red-btn">
+                    <i class="fas fa-paper-plane"></i> Post Comment
+                </button>
             </form>
         </div>
     </section>
 
-    <!------ Footer -------> 
     <section class="footer">
         <h4>About Us</h4>
-        <p>For general inquiries, you can contact Harvard University at:</p>
+        <p>Harvard University is committed to excellence in teaching, learning, and research, and to developing leaders who make a difference globally.</p>
         <div class="icons">
-            <i class="fab fa-facebook-f"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-twitter"></i>
-            <i class="fab fa-linkedin-in"></i>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <div class="footer-text">
-            <p>Made <i class="fa fa-heart"></i> by Adil Shamim</p>
+            <p>Made with <i class="fa fa-heart"></i> by Adil Shamim</p>
         </div>
     </section>
 
-    <!----JavaScript for Toggle Menu----->
     <script>
-        var navLinks = document.getElementById("navLinks");
-        function showMenu() {
-            navLinks.style.right = "0";
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle i');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggle.classList.remove('fa-sun');
+                themeToggle.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.classList.remove('fa-moon');
+                themeToggle.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
         }
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // Mobile menu functionality
+        function showMenu() {
+            document.getElementById("navLinks").style.right = "0";
+        }
+
         function hideMenu() {
-            navLinks.style.right = "-200px";
+            document.getElementById("navLinks").style.right = "-200px";
+        }
+
+        // Form submission handling
+        function handleSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const successMessage = document.createElement('div');
+            successMessage.style.color = 'var(--primary-color)';
+            successMessage.style.textAlign = 'center';
+            successMessage.style.marginTop = '20px';
+            successMessage.innerHTML = 'Thank you for your comment!';
+            
+            form.style.display = 'none';
+            form.parentNode.appendChild(successMessage);
+            
+            setTimeout(() => {
+                form.reset();
+                form.style.display = 'flex';
+                successMessage.remove();
+            }, 3000);
+            
+            return false;
         }
     </script>
 </body>
