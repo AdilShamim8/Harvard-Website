@@ -1,97 +1,694 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>University Web Site Design</title>
+    <title>Blog - Harvard University</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            /* Light theme variables */
+            --bg-color: #f0f8ff;
+            --text-color: #2c3e50;
+            --container-bg: #ffffff;
+            --primary-color: #87ceeb;
+            --hover-color: #4682b4;
+            --shadow-color: rgba(135, 206, 235, 0.2);
+            --nav-bg: #4682b4;
+            --nav-text: #ffffff;
+            --card-bg: #ffffff;
+            --card-border: #e0e0e0;
+            --accent-color: #ff6b6b;
+            --success-color: #2ecc71;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #1a2634;
+            --text-color: #e0e0e0;
+            --container-bg: #2c3e50;
+            --primary-color: #87ceeb;
+            --hover-color: #00bfff;
+            --shadow-color: rgba(135, 206, 235, 0.1);
+            --nav-bg: #1a2634;
+            --nav-text: #ffffff;
+            --card-bg: #2c3e50;
+            --card-border: #3d4d5d;
+            --accent-color: #ff6b6b;
+            --success-color: #2ecc71;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--nav-bg);
+            font-size: 1.2em;
+            z-index: 1001;
+            box-shadow: 0 2px 5px var(--shadow-color);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            background: var(--hover-color);
+        }
+
+        .blog-content {
+            width: 90%;
+            max-width: 1200px;
+            margin: 100px auto 40px;
+            padding: 20px;
+        }
+
+        .search-section {
+            background: var(--container-bg);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            border: 1px solid var(--card-border);
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-form input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: var(--container-bg);
+            color: var(--text-color);
+        }
+
+        .search-form button {
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: var(--nav-bg);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-form button:hover {
+            background: var(--hover-color);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .blog-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px var(--shadow-color);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--card-border);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 25px var(--shadow-color);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .blog-card-content {
+            padding: 20px;
+        }
+
+        .blog-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .blog-card p {
+            color: var(--text-color);
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .blog-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: var(--container-bg);
+            border-top: 1px solid var(--card-border);
+        }
+
+        .blog-meta span {
+            color: var(--text-color);
+            font-size: 0.9em;
+        }
+
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .read-more:hover {
+            color: var(--hover-color);
+        }
+
+        .blog-categories {
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            margin-bottom: 40px;
+            border: 1px solid var(--card-border);
+        }
+
+        .blog-categories h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .category-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .category-item:hover {
+            transform: translateX(5px);
+        }
+
+        .category-item span:last-child {
+            background: var(--primary-color);
+            color: var(--nav-bg);
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .newsletter-section {
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            border: 1px solid var(--card-border);
+            text-align: center;
+        }
+
+        .newsletter-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background: var(--container-bg);
+            color: var(--text-color);
+        }
+
+        .newsletter-form button {
+            padding: 12px 25px;
+            background: var(--primary-color);
+            color: var(--nav-bg);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--hover-color);
+        }
+
+        .comment-box {
+            background: var(--container-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px var(--shadow-color);
+            border: 1px solid var(--card-border);
+        }
+
+        .comment-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        .comment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .comment-form input,
+        .comment-form textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            background-color: var(--container-bg);
+            color: var(--text-color);
+            transition: all 0.3s;
+        }
+
+        .comment-form input:focus,
+        .comment-form textarea:focus {
+            outline: none;
+            box-shadow: 0 0 8px var(--primary-color);
+        }
+
+        .red-btn {
+            background-color: var(--primary-color) !important;
+            color: var(--nav-bg) !important;
+            border: none !important;
+            padding: 15px 30px !important;
+            border-radius: 8px !important;
+            cursor: pointer !important;
+            font-weight: bold !important;
+            transition: all 0.3s !important;
+            width: fit-content !important;
+        }
+
+        .red-btn:hover {
+            background-color: var(--hover-color) !important;
+            transform: translateY(-2px);
+        }
+
+        .featured-posts {
+            margin-bottom: 40px;
+        }
+
+        .featured-posts h2 {
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            font-size: 2em;
+            text-align: center;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .pagination button {
+            padding: 10px 20px;
+            background: var(--container-bg);
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .pagination button:hover {
+            background: var(--primary-color);
+            color: var(--nav-bg);
+        }
+
+        .pagination button.active {
+            background: var(--primary-color);
+            color: var(--nav-bg);
+        }
+
+        @media (max-width: 768px) {
+            .blog-content {
+                width: 95%;
+                margin-top: 80px;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-list {
+                grid-template-columns: 1fr;
+            }
+
+            .search-form,
+            .newsletter-form {
+                flex-direction: column;
+            }
+
+            .search-form button,
+            .newsletter-form button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </button>
+
     <section class="sub-header">
         <nav>
-            <a href="Index.html"> <img src="images/Harvard logo.png" alt="Logo"> </a>
+            <a href="index.html"> <img src="images/Harvard logo.png" alt="Harvard University Logo"> </a>
             <div class="nav-links" id="navLinks">
                 <i class="fa fa-times" onclick="hideMenu()"></i>
                 <ul>
-                    <li><a href="index.html" target="_blank">Go Home</a></li>
-                    <li><a href="About.html" target="_blank">About Us</a></li>
-                    <li><a href="Course.html" target="_blank">Course</a></li>
-                    <li><a href="Blog.html" target="_blank">Blog</a></li>
-                    <li><a href="Contact.html" target="_blank">Contact Us</a></li>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="About.html">About</a></li>
+                    <li><a href="Course.html">Courses</a></li>
+                    <li><a href="Blog.html">Blog</a></li>
+                    <li><a href="Contact.html">Contact</a></li>
                 </ul>
             </div>
             <i class="fa fa-bars" onclick="showMenu()"></i>
         </nav>
-        <h1> Our Certificate And Online Programs For 2024 </h1>
+        <h1>Latest News and Updates</h1>
     </section>
 
-    <!------------- Blog page content ---------------->
     <section class="blog-content">
-        <div class="row">
-            <div class="blog-left">
-                <img src="images/certificate2.jpg" alt="Certificate">
-                <h2>Our Certificate And Online Programs For 2024</h2>
-                <p>CS50’s Web Programming with Python and JavaScript - Focuses on web development using Python, JavaScript, and frameworks like Django and React.</p>
-                <p>CS50’s Introduction to Artificial Intelligence with Python - Covers the basics of AI and machine learning using Python.</p>
-                <p>CS50’s Introduction to Cybersecurity - Teaches how to protect data, devices, and systems from threats.</p>
-                <p>CS109A: Introduction to Data Science - An introduction to data science using Python.</p>
-                <p>CS182: Artificial Intelligence - Advanced topics in AI, including machine learning, neural networks, and natural language processing.</p>
-            </div>
-            <div class="blog-right">
-                <h3>Post Categories</h3>
-                <div>
-                    <span>Core Computer Science</span>
-                    <span>4</span>
-                </div>
-                <div>
-                    <span>Artificial Intelligence and Machine Learning</span>
-                    <span>3</span>
-                </div>
-                <div>
-                    <span>Data Science and Analytics</span>
-                    <span>3</span>
-                </div>
-                <div>
-                    <span>Cybersecurity</span>
-                    <span>3</span>
-                </div>
-            </div>
-        </div>
-        <div class="comment-box">
-            <h3>Leave a comment</h3>
-            <form class="comment-form">
-                <input type="text" placeholder="Enter Your Name">
-                <input type="email" placeholder="Enter Your Email">
-                <textarea rows="5" placeholder="Your Comment"></textarea>
-                <button type="submit" class="hero-btn red-btn">POST COMMENT</button>
+        <div class="search-section">
+            <form class="search-form" onsubmit="return handleSearch(event)">
+                <input type="text" placeholder="Search articles..." required>
+                <button type="submit">
+                    <i class="fas fa-search"></i> Search
+                </button>
             </form>
         </div>
+
+        <div class="featured-posts">
+            <h2>Featured Articles</h2>
+            <div class="blog-grid">
+                <article class="blog-card">
+                    <img src="images/certificate2.jpg" alt="Harvard AI Research">
+                    <div class="blog-card-content">
+                        <h3>Breakthrough in AI Research</h3>
+                        <p>Harvard researchers have made significant progress in developing more efficient neural networks for natural language processing...</p>
+                    </div>
+                    <div class="blog-meta">
+                        <span>March 15, 2024</span>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <img src="images/certificate2.jpg" alt="Student Success Story">
+                    <div class="blog-card-content">
+                        <h3>Student Success Story: From CS50 to Silicon Valley</h3>
+                        <p>Meet Sarah Johnson, a CS50 graduate who went on to become a lead developer at a major tech company...</p>
+                    </div>
+                    <div class="blog-meta">
+                        <span>March 12, 2024</span>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+
+                <article class="blog-card">
+                    <img src="images/certificate2.jpg" alt="Cybersecurity Workshop">
+                    <div class="blog-card-content">
+                        <h3>Upcoming Cybersecurity Workshop</h3>
+                        <p>Join our expert-led workshop on advanced cybersecurity practices and learn how to protect your digital assets...</p>
+                    </div>
+                    <div class="blog-meta">
+                        <span>March 10, 2024</span>
+                        <a href="#" class="read-more">Read More</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+
+        <div class="blog-grid">
+            <article class="blog-card">
+                <img src="images/certificate2.jpg" alt="Quantum Computing Research">
+                <div class="blog-card-content">
+                    <h3>Quantum Computing Breakthrough</h3>
+                    <p>Our quantum computing research team has achieved a new milestone in quantum error correction...</p>
+                </div>
+                <div class="blog-meta">
+                    <span>March 8, 2024</span>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/certificate2.jpg" alt="Data Science Conference">
+                <div class="blog-card-content">
+                    <h3>Annual Data Science Conference</h3>
+                    <p>Join us for our annual data science conference featuring leading experts in machine learning and AI...</p>
+                </div>
+                <div class="blog-meta">
+                    <span>March 5, 2024</span>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </article>
+
+            <article class="blog-card">
+                <img src="images/certificate2.jpg" alt="Student Research Grant">
+                <div class="blog-card-content">
+                    <h3>New Research Grant Opportunities</h3>
+                    <p>Harvard announces new funding opportunities for student research projects in computer science...</p>
+                </div>
+                <div class="blog-meta">
+                    <span>March 3, 2024</span>
+                    <a href="#" class="read-more">Read More</a>
+                </div>
+            </article>
+        </div>
+
+        <div class="blog-categories">
+            <h3>Popular Categories</h3>
+            <div class="category-list">
+                <div class="category-item">
+                    <span>Computer Science</span>
+                    <span>15</span>
+                </div>
+                <div class="category-item">
+                    <span>Artificial Intelligence</span>
+                    <span>12</span>
+                </div>
+                <div class="category-item">
+                    <span>Data Science</span>
+                    <span>8</span>
+                </div>
+                <div class="category-item">
+                    <span>Cybersecurity</span>
+                    <span>10</span>
+                </div>
+                <div class="category-item">
+                    <span>Web Development</span>
+                    <span>14</span>
+                </div>
+                <div class="category-item">
+                    <span>Student Life</span>
+                    <span>7</span>
+                </div>
+                <div class="category-item">
+                    <span>Research</span>
+                    <span>9</span>
+                </div>
+                <div class="category-item">
+                    <span>Events</span>
+                    <span>6</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="newsletter-section">
+            <h3>Subscribe to Our Newsletter</h3>
+            <p>Stay updated with the latest news, research, and events from Harvard University.</p>
+            <form class="newsletter-form" onsubmit="return handleNewsletter(event)">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+
+        <div class="comment-box">
+            <h3>Join the Discussion</h3>
+            <form class="comment-form" onsubmit="return handleSubmit(event)">
+                <input type="text" placeholder="Enter Your Name" required>
+                <input type="email" placeholder="Enter Your Email" required>
+                <textarea rows="5" placeholder="Share your thoughts..." required></textarea>
+                <button type="submit" class="hero-btn red-btn">
+                    <i class="fas fa-paper-plane"></i> Post Comment
+                </button>
+            </form>
+        </div>
+
+        <div class="pagination">
+            <button class="active">1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>Next</button>
+        </div>
     </section>
 
-    <!------ Footer ------->
     <section class="footer">
         <h4>About Us</h4>
-        <p>For general inquiries, you can contact Harvard University at:</p>
+        <p>Harvard University is committed to excellence in teaching, learning, and research, and to developing leaders who make a difference globally.</p>
         <div class="icons">
-            <i class="fab fa-facebook-f"></i>
-            <i class="fab fa-instagram"></i>
-            <i class="fab fa-twitter"></i>
-            <i class="fab fa-linkedin-in"></i>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
         </div>
         <div class="footer-text">
-            <p>Made <i class="fa fa-heart"></i> by Adil Shamim</p>
+            <p>Made with <i class="fa fa-heart"></i> by Adil Shamim</p>
         </div>
     </section>
 
-    <!----JavaScript for Toggle Menu----->
     <script>
-        var navLinks = document.getElementById("navLinks");
+        // Theme toggle functionality
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.querySelector('.theme-toggle i');
+            
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggle.classList.remove('fa-sun');
+                themeToggle.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.classList.remove('fa-moon');
+                themeToggle.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            document.body.setAttribute('data-theme', 'dark');
+            document.querySelector('.theme-toggle i').classList.replace('fa-moon', 'fa-sun');
+        }
+
+        // Mobile menu functionality
         function showMenu() {
-            navLinks.style.right = "0";
+            document.getElementById("navLinks").style.right = "0";
         }
+
         function hideMenu() {
-            navLinks.style.right = "-200px";
+            document.getElementById("navLinks").style.right = "-200px";
         }
+
+        // Form submission handling
+        function handleSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const successMessage = document.createElement('div');
+            successMessage.style.color = 'var(--primary-color)';
+            successMessage.style.textAlign = 'center';
+            successMessage.style.marginTop = '20px';
+            successMessage.innerHTML = 'Thank you for your comment!';
+            
+            form.style.display = 'none';
+            form.parentNode.appendChild(successMessage);
+            
+            setTimeout(() => {
+                form.reset();
+                form.style.display = 'flex';
+                successMessage.remove();
+            }, 3000);
+            
+            return false;
+        }
+
+        // Newsletter subscription handling
+        function handleNewsletter(event) {
+            event.preventDefault();
+            const form = event.target;
+            const successMessage = document.createElement('div');
+            successMessage.style.color = 'var(--success-color)';
+            successMessage.style.textAlign = 'center';
+            successMessage.style.marginTop = '20px';
+            successMessage.innerHTML = 'Thank you for subscribing to our newsletter!';
+            
+            form.style.display = 'none';
+            form.parentNode.appendChild(successMessage);
+            
+            setTimeout(() => {
+                form.reset();
+                form.style.display = 'flex';
+                successMessage.remove();
+            }, 3000);
+            
+            return false;
+        }
+
+        // Search functionality
+        function handleSearch(event) {
+            event.preventDefault();
+            const searchTerm = event.target.querySelector('input').value.toLowerCase();
+            const blogCards = document.querySelectorAll('.blog-card');
+            
+            blogCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                const content = card.querySelector('p').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || content.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+            
+            return false;
+        }
+
+        // Pagination handling
+        document.querySelectorAll('.pagination button').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelector('.pagination button.active').classList.remove('active');
+                this.classList.add('active');
+            });
+        });
     </script>
 </body>
 </html>
